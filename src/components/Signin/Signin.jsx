@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from "./Signup.module.css";
+import styles from "./Signin.module.css";
 
 const auth = getAuth(app);
 
-const Signup = () => {
+const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const ToastSuccess = () =>
-    toast.success("REGISTRATION SUCCESSFUL!", {
+    toast.success("LOGIN SUCCESS!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -24,7 +24,7 @@ const Signup = () => {
     });
 
   const ToastError = () =>
-    toast.error("REGISTRATION FAILED!", {
+    toast.error("LOGIN FAILED!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -36,7 +36,7 @@ const Signup = () => {
     });
 
   const createUser = () => {
-    createUserWithEmailAndPassword(auth, username, password)
+    signInWithEmailAndPassword(auth, username, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
@@ -77,7 +77,7 @@ const Signup = () => {
         />
       </div>
       <button className={styles.button} onClick={createUser}>
-        SIGN UP
+        SIGN IN
       </button>
       <ToastContainer
         position="top-center"
@@ -95,4 +95,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;

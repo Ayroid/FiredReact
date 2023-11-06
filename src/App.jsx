@@ -1,7 +1,9 @@
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebase";
+import Signin from "./components/Signin/Signin";
 import Signup from "./components/Signup/Signup";
+
 import "./App.css";
 
 const db = getDatabase(app);
@@ -31,9 +33,10 @@ function App() {
     <>
       <div className="App">
         <h1>Firebase React App</h1>
-        <button onClick={putData}>PutData</button>
-        <button onClick={signupUser}>Signup</button>
+        {/* <button onClick={putData}>PutData</button>
+        <button onClick={signupUser}>Signup</button> */}
         <Signup />
+        <Signin />
       </div>
     </>
   );
