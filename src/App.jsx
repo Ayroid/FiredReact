@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { getDatabase, ref, set } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "./firebase";
+import Signup from "./components/Signup/Signup";
+import "./App.css";
+
+const db = getDatabase(app);
+const auth = getAuth(app);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const putData = () => {
+    set(ref(db, "users/ayroid"), {
+      name: "Ayroid",
+      age: 21,
+      email: "ayroid@gmail.com",
+    });
+  };
+
+  const signupUser = () => {
+    createUserWithEmailAndPassword(auth, "ayroids@gmail.com", "ayroids")
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="App">
+        <h1>Firebase React App</h1>
+        <button onClick={putData}>PutData</button>
+        <button onClick={signupUser}>Signup</button>
+        <Signup />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
